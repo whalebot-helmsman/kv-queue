@@ -3,16 +3,9 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "src/scheme.h"
 #include "include/leveldb_queue.h"
-
-struct kvqueue_leveldb_storage_s {
-    leveldb_options_t*      options;
-    leveldb_t*              storage;
-    char*                   error_message;
-    leveldb_readoptions_t*  read_options;
-    leveldb_writeoptions_t* write_options;
-};
+#include "src/leveldb/structs.h"
+#include "src/scheme.h"
 
 const char* kvqueue_leveldb_storage_check_version(kvqueue_leveldb_storage_t* handler)
 {
