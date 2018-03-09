@@ -31,8 +31,6 @@ const char* kvqueue_leveldb_storage_open( kvqueue_leveldb_storage_t* handler
                                         , leveldb_options_t*         options
                                         , const char*                path    )
 {
-    char*  error_message    =   NULL;
-
     leveldb_options_t* opts =   options;
     if (NULL == opts) {
         handler->options    =   kvqueue_leveldb_default_options();
