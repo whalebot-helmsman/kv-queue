@@ -7,12 +7,12 @@
 extern "C" {
 #endif
 
-enum signal_bits_s {
-    meta        = 0,
-    queue       = 1,
-    priority    = 2,
-    message     = 3,
-};
+typedef enum  {
+    signal_bits_meta        = 0,
+    signal_bits_queue       = 1,
+    signal_bits_priority    = 2,
+    signal_bits_message     = 3,
+} signal_bits_e;
 
 const char* meta_key_value();
 size_t meta_key_len();
