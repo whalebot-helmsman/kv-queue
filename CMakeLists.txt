@@ -14,6 +14,7 @@ set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Wall -pedantic -Wextra")
 
 include_directories(${LIBKVQUEUE_SRC_ROOT})
 add_subdirectory(src)
+add_subdirectory(example)
 
 find_package(GTest)
 find_package(Threads)
