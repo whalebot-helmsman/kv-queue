@@ -1,0 +1,28 @@
+language: c
+before_install:
+    - sudo apt-get install -qq cmake
+    - sudo apt-get install -qq leveldb
+
+    - wget https://github.com/google/googletest/archive/release-1.6.0.zip
+    - unzip release-1.6.0.zip
+    - pushd googletest-release-1.6.0
+    - cmake -DCMAKE_BUILD_TYPE=Release
+    - make
+    - sudo cp libgtest* /usr/lib
+    - sudo mkdir /usr/include/gtest
+    - sudo cp -r include/gtest/* /usr/include/gtest
+    - popd
+
+    - wget https://github.com/whalebot-helmsman/libcmdline/archive/master.zip
+    - unzip master.zip
+    - pushd libcmdline-master
+    - cmake -DCMAKE_BUILD_TYPE=Release
+    - make
+    - sudo make install
+    - popd
+
+script:
+    - cmake -DCMAKE_BUILD_TYPE=Release ./
+    - make
+    - make test
+
