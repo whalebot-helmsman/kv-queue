@@ -5,7 +5,8 @@ find_package(LevelDB REQUIRED)
 set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99" )
 
 include_directories( ${LEVELDB_INCLUDE_DIRS} )
-set( SOURCES leveldb/queue.c )
+set( SOURCES leveldb/queue.c
+             scheme.c )
 
 add_library(${TITLE} STATIC ${SOURCES})
 INSTALL( TARGETS ${TITLE} DESTINATION lib )
