@@ -1,7 +1,7 @@
 language: c
 before_install:
     - sudo apt-get install -qq cmake
-    - sudo apt-get install -qq leveldb
+    - sudo apt-get install -qq libleveldb-dev
 
     - wget https://github.com/google/googletest/archive/release-1.6.0.zip
     - unzip release-1.6.0.zip
