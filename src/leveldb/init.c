@@ -6,12 +6,10 @@
 #include "include/leveldb_queue.h"
 #include "src/leveldb/structs.h"
 #include "src/scheme.h"
+#include "src/errors.h"
 
 const char* kvqueue_leveldb_storage_check_version(kvqueue_leveldb_storage_t* handler)
 {
-    const char* WRONG_SIZE_ERROR    =   "Wrong size of meta value";
-    const char* WRONG_VERSION_ERROR =   "Wrong version of storage file";
-
     size_t  version_size    =   0;
     char*   version         =   leveldb_get( handler->storage
                                            , handler->read_options
@@ -26,8 +24,8 @@ const char* kvqueue_leveldb_storage_check_version(kvqueue_leveldb_storage_t* han
 
     if ((NULL != version) && (sizeof(uint16_t) != version_size)) {
         leveldb_free(version);
-        handler->error_message = malloc(strlen(WRONG_SIZE_ERROR) + 1);
-        strcpy(handler->error_message, WRONG_SIZE_ERROR);
+        handler->error_message = malloc(strlen(WRONG_VERSION_SIZE_ERROR) + 1);
+        strcpy(handler->error_message, WRONG_VERSION_SIZE_ERROR);
         return handler->error_message;
     }
 
