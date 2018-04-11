@@ -3,6 +3,8 @@
 
 #include "include/leveldb_queue.h"
 #include "src/leveldb/structs.h"
+#include "src/scheme.h"
+#include "src/errors.h"
 
 kvqueue_leveldb_queue_t* kvqueue_leveldb_queue_create()
 {
@@ -40,6 +42,40 @@ const char* kvqueue_leveldb_queue_attach( kvqueue_leveldb_storage_t* handler
     strcpy(queue->name, name);
 
     return NULL;
+}
+
+const char* kvqueue_leveldb_storage_queue_number( kvqueue_leveldb_storage_t* handler
+                                                , uint16_t*                  queue_number )
+{
+    size_t  queue_number_size   =   0;
+    char*   queue_number_ptr    =   leveldb_get( handler->storage
+                                               , handler->read_options
+                                               , queue_num_key_value()
+                                               , queue_num_key_len()
+                                               , &queue_number_size
+                                               , &handler->error_message );
+
+    if (NULL != handler->error_message) {
+        return handler->error_message;
+    }
+
+    if (NULL == queue_number_ptr) {
+        *queue_number   =   0;
+        return NULL;
+    }
+
+    if ((NULL != queue_number_ptr) && (queue_number_size != sizeof(uint16_t))) {
+        leveldb_free(queue_number_ptr);
+        handler->error_message = malloc(strlen(WRONG_QUEUE_NUM_SIZE_ERROR) + 1);
+        strcpy(handler->error_message, WRONG_QUEUE_NUM_SIZE_ERROR);
+        return handler->error_message;
+    }
+
+    if ((NULL != queue_number_ptr) && (sizeof(uint16_t) == queue_number_size)) {
+        *queue_number   =   *(uint16_t*)queue_number_ptr;
+        leveldb_free(queue_number_ptr);
+        return NULL;
+    }
 }
 
 const char* kvqueue_leveldb_queue_push( kvqueue_leveldb_queue_t*    queue

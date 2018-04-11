@@ -34,6 +34,31 @@ TEST(CreationTest, you_create_storage_in_tmp_dir)
     system(command.c_str());
 }
 
+TEST(CreationTest, new_storage_has_zero_queues)
+{
+    const char* path = "/tmp/myqueue";
+    std::string command("rm -rf ");
+    command += path;
+
+    system(command.c_str());
+
+    kvqueue_leveldb_storage_t*  storage =   kvqueue_leveldb_storage_create();
+    const char*                 error   =   kvqueue_leveldb_storage_open( storage
+                                                                        , NULL
+                                                                        , path    );
+    ASSERT_STREQ(error, NULL);
+
+    uint16_t    queue_number;
+    error = kvqueue_leveldb_storage_queue_number(storage, &queue_number);
+    ASSERT_STREQ(error, NULL);
+    ASSERT_EQ(queue_number, 0);
+
+    kvqueue_leveldb_storage_close(storage);
+    kvqueue_leveldb_storage_destroy(storage);
+
+    system(command.c_str());
+}
+
 TEST(CreationTest, you_cannot_open_queue_from_another_version)
 {
     const char* path = "/tmp/myqueue";

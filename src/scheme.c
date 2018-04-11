@@ -11,3 +11,14 @@ size_t meta_key_len()
 {
     return 4;
 }
+
+const char* queue_num_key_value()
+{
+    return "\0que";
+}
+
+size_t queue_num_key_len()
+{
+    return 4;
+}
+

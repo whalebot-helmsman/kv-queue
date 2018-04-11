@@ -21,6 +21,8 @@ const char* kvqueue_leveldb_storage_open( kvqueue_leveldb_storage_t* handler
                                         , const char*                path    );
 void kvqueue_leveldb_storage_close(kvqueue_leveldb_storage_t* handler);
 void kvqueue_leveldb_storage_destroy(kvqueue_leveldb_storage_t* handler);
+const char* kvqueue_leveldb_storage_queue_number( kvqueue_leveldb_storage_t* handler
+                                                , uint16_t*                  queue_number );
 
 typedef struct kvqueue_leveldb_queue_s kvqueue_leveldb_queue_t;
 kvqueue_leveldb_queue_t* kvqueue_leveldb_queue_create();
