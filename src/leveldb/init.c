@@ -20,6 +20,10 @@ const char* kvqueue_leveldb_storage_check_version(kvqueue_leveldb_storage_t* han
                                            , &version_size
                                            , &handler->error_message );
 
+    if (NULL != handler->error_message) {
+        return handler->error_message;
+    }
+
     if ((NULL != version) && (sizeof(uint16_t) != version_size)) {
         leveldb_free(version);
         handler->error_message = malloc(strlen(WRONG_SIZE_ERROR) + 1);
